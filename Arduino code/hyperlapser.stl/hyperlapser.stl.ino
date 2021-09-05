@@ -11,13 +11,13 @@ int downButton = 11;
 int selectButton = 12;
 int menu = 1;
 int numberMenu = 1;
-int time = 3;
+int time = 360;
 int mode = 1;
 Servo servo;
 bool running = false;
 float  interval;
 unsigned long previousMillis = 0;
-int startPos = 0;
+int startPos = 150;
 int finishPos = 180;
 void setup() {
   lcd.begin();
