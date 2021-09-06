@@ -5,20 +5,21 @@
 #ifndef UNTITLED4_MENU_H
 #define UNTITLED4_MENU_H
 
-
-#include "State.h"
 #include "Hyperlapser.h"
+#include "State.h"
+#include "TurnServo.h"
+#include <Arduino.h>
 
 class Menu : public State {
-    Hyperlapser hyperlapser;
+public:
+    Menu(Hyperlapser *newOwner);
 
-    Menu(Hyperlapser newHyperlapser);
+    void upButton() override;
 
-    void upButton();
+    void downButton() override;
 
-    void downButton();
+    void confirmButton() override;
 
-    void confirmButton();
 };
 
 

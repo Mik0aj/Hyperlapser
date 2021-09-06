@@ -3,3 +3,12 @@
 //
 
 #include "State.h"
+
+State::State(Hyperlapser* newOwner):owner(newOwner) {
+    //nothing here
+}
+
+State::~State() {
+    //nothing here
+    //virtual base class destructor
+}

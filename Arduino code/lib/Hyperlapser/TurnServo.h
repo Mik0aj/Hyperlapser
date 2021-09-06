@@ -5,21 +5,19 @@
 #ifndef UNTITLED4_TURNSERVO_H
 #define UNTITLED4_TURNSERVO_H
 
-#include "State.h"
 #include "Hyperlapser.h"
+#include "State.h"
+#include <Arduino.h>
 
-class TurnServo : public State{
-    Hyperlapser hyperlapser;
+class TurnServo : public State {
+public:
+    TurnServo(Hyperlapser *newOwner);
 
-    TurnServo(Hyperlapser newHyperlapser);
+    void upButton() override;
 
-    void upButton();
+    void downButton() override;
 
-    void downButton();
-
-    void confirmButton();
+    void confirmButton() override;
 
 };
-
-
 #endif //UNTITLED4_TURNSERVO_H

@@ -1,23 +1,24 @@
-//
-// Created by mikoaj on 05.09.2021.
-//
+////
+//// Created by mikoaj on 05.09.2021.
+////
 
 #ifndef UNTITLED4_CHOOSENUMBER_H
 #define UNTITLED4_CHOOSENUMBER_H
 
-#include "State.h"
 #include "Hyperlapser.h"
+#include "State.h"
+#include <Arduino.h>
 
 class ChooseNumber : public State {
-    Hyperlapser hyperlapser;
+public:
+    ChooseNumber(Hyperlapser *newOwner);
 
-    ChooseNumber(Hyperlapser newHyperlapser);
+    void upButton() override;
 
-    void upButton();
+    void downButton() override;
 
-    void downButton();
+    void confirmButton() override;
 
-    void confirmButton();
 };
 
 
