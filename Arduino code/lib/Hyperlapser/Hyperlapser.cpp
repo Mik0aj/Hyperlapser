@@ -166,3 +166,10 @@ void Hyperlapser::changeStateToChooseNumber() {
     delete currentState;
     currentState=new ChooseNumber(this);
 }
+
+
+void Hyperlapser::notify() {
+    if (observer != nullptr) {
+        observer->onReceivedDataFromSubject(this);
+    }
+}

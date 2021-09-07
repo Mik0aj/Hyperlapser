@@ -26,9 +26,10 @@
 #include "TurnServo.h"
 #include "ChooseNumber.h"
 
-TurnServo::TurnServo(Hyperlapser* newOwner):State(owner){
+TurnServo::TurnServo(Hyperlapser *newOwner) : State(owner) {
 
 }
+
 void TurnServo::downButton() {
     Serial.print("downButton TurnServo ");
 }

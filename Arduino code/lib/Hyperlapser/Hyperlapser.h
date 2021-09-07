@@ -5,6 +5,10 @@
 #ifndef UNTITLED4_HYPERLAPSER_H
 #define UNTITLED4_HYPERLAPSER_H
 
+#include "Arduino.h"
+#include "Subject.h"
+#include "Observer.h"
+
 //enum ConstantValues {
 //    const int MAX_MENU_VALUE = 8;
 //    const int MAX_NUMBER_MENU_VALUE = 12;
@@ -26,12 +30,16 @@
 //};
 class State;
 
-class Hyperlapser {
+class Hyperlapser : public Subject{
 private:
     State *currentState;
+    int currentMenu=0;
+    int mValue=1;
 
 public:
     Hyperlapser();
+
+    void notify();
 
     void upButton();
 
