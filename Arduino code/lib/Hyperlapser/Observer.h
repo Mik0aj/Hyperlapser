@@ -10,7 +10,6 @@ class Subject;
 
 class Observer {
 public:
-    void attachSubject(Subject *subject);
     virtual void onReceivedDataFromSubject(Subject*) = 0;
 };
 #endif //ARDUINO_CODE_OBSERVER_H

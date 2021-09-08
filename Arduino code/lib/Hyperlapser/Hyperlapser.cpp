@@ -174,8 +174,8 @@ void Hyperlapser::notify() {
     }
 }
 
-int Hyperlapser::getValues() {
-    return currentMenu;
+int** Hyperlapser::getValues() {
+    return valuesList;
 }
 
 void Hyperlapser::setCurrentMenu(int currentMenu) {

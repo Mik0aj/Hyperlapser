@@ -6,8 +6,13 @@
 
 
 void Display::onReceivedDataFromSubject(Subject *subject) {
-    hyperlapser=subject;
-    this->print(subject->getValues());
+    int **list=subject->getValues();
+    Serial.println("display");
+    Serial.print(*list[0]);
+    Serial.print(*list[1]);
+    print(*list[0]);
+    print(*list[1]);
+
 }
 
 Display::Display(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows) : LiquidCrystal_I2C(lcd_Addr, lcd_cols,
@@ -15,9 +20,9 @@ Display::Display(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows) : LiquidC
 }
 
 void Display::initClass() {
-    this->init();
-    this->backlight();
-    this->print("halko");
+    init();
+    backlight();
+    print("halko");
 }
 
 

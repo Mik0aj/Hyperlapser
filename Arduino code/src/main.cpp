@@ -36,5 +36,6 @@ void loop() {
         lastFire = millis();
     }
     delay(3000);
-    hyperlapser.setCurrentMenu(2);
+    hyperlapser.notify();
+    hyperlapser.setCurrentMenu(1);
 }

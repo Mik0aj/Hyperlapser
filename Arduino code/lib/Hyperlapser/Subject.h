@@ -15,11 +15,9 @@ protected:
     Observer *observer;
 public:
     void registerObserver(Observer *obs);
-
     void unregisterObserver();
-
     virtual void notify() = 0;
-    virtual int getValues()=0;
+    virtual int** getValues()=0;
 };
 
 #endif //ARDUINO_CODE_SUBJECT_H

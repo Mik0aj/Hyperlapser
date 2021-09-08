@@ -33,13 +33,13 @@ class State;
 class Hyperlapser : public Subject{
 private:
     State *currentState;
-    int currentMenu=0;
-    int mValue=1;
-
+    int currentMenu=8;
+    int mValue=5;
+    int *valuesList[2]={&mValue, &currentMenu};
 public:
     Hyperlapser();
 
-    int getValues();
+    int** getValues();
 
     void setCurrentMenu(int currentMenu);
 
