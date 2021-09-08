@@ -39,6 +39,10 @@ private:
 public:
     Hyperlapser();
 
+    int getValues();
+
+    void setCurrentMenu(int currentMenu);
+
     void notify();
 
     void upButton();

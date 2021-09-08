@@ -5,8 +5,9 @@
 #include "Display.h"
 
 
-void Display::onReceivedDataFromSubject(const Subject *) {
-
+void Display::onReceivedDataFromSubject(Subject *subject) {
+    hyperlapser=subject;
+    this->print(subject->getValues());
 }
 
 Display::Display(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows) : LiquidCrystal_I2C(lcd_Addr, lcd_cols,

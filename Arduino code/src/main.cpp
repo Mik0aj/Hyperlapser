@@ -18,6 +18,7 @@ void setup() {
     pinMode(DOWN_BUTTON, INPUT_PULLUP);
     pinMode(CONFIRM_BUTTON, INPUT_PULLUP);
     display.initClass();
+    hyperlapser.registerObserver(&display);
 }
 
 // the loop function runs over and over again forever
@@ -34,4 +35,6 @@ void loop() {
         }
         lastFire = millis();
     }
+    delay(3000);
+    hyperlapser.setCurrentMenu(2);
 }

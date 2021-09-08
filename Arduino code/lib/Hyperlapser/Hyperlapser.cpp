@@ -173,3 +173,12 @@ void Hyperlapser::notify() {
         observer->onReceivedDataFromSubject(this);
     }
 }
+
+int Hyperlapser::getValues() {
+    return currentMenu;
+}
+
+void Hyperlapser::setCurrentMenu(int currentMenu) {
+    Hyperlapser::currentMenu = currentMenu;
+    notify();
+}
