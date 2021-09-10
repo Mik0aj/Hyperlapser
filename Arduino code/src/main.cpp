@@ -1,11 +1,9 @@
 #include <Arduino.h>
-#include <Servo.h>
 #include <Hyperlapser.h>
 #include "Display.h"
 
 
 const int BAUD_RATE = 9600;
-const int COMMON_PIN = 2;
 const int UP_BUTTON = 4;
 const int DOWN_BUTTON = 5;
 const int CONFIRM_BUTTON = 6;
@@ -14,7 +12,7 @@ void (Hyperlapser::*functions[])()={&Hyperlapser::upButton,&Hyperlapser::downBut
 unsigned long lastFire = 0;
 int test=1;
 Hyperlapser hyperlapser;
-Display display(0x27, 16, 2);
+Display display(0x27, 16, 2,&hyperlapser);
 void setup() {
     Serial.begin(BAUD_RATE);
     pinMode(UP_BUTTON, INPUT_PULLUP);

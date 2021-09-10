@@ -40,9 +40,9 @@
 //    return turnServo;
 //}
 //
-//int Hyperlapser::getCurrentMenu() const {
-//    return currentMenu;
-//}
+int Hyperlapser::getCurrentMenu() const {
+    return currentMenu;
+}
 //
 //void Hyperlapser::setCurrentMenu(int currentMenu) {
 //    if (Hyperlapser::currentMenu == 0) {
@@ -140,14 +140,17 @@
 //
 void Hyperlapser::upButton() {
     currentState->upButton();
+
 }
 
 void Hyperlapser::downButton() {
     currentState->downButton();
+
 }
 
 void Hyperlapser::confirmButton() {
     currentState->confirmButton();
+
 }
 
 Hyperlapser::Hyperlapser()
@@ -156,15 +159,17 @@ Hyperlapser::Hyperlapser()
 
 void Hyperlapser::changeStateToTurnServo() {
     delete currentState;
-    currentState=new TurnServo(this);
+    currentState = new TurnServo(this);
 }
+
 void Hyperlapser::changeStateToMenu() {
     delete currentState;
-    currentState=new Menu(this);
+    currentState = new Menu(this);
 }
+
 void Hyperlapser::changeStateToChooseNumber() {
     delete currentState;
-    currentState=new ChooseNumber(this);
+    currentState = new ChooseNumber(this);
 }
 
 
@@ -174,11 +179,20 @@ void Hyperlapser::notify() {
     }
 }
 
-int** Hyperlapser::getValues() {
-    return valuesList;
-}
+
 
 void Hyperlapser::setCurrentMenu(int currentMenu) {
+    if (currentMenu == 0)currentMenu = 7;
+    if (currentMenu == ConstantValues::MAX_MENU_VALUE)currentMenu = 1;
     Hyperlapser::currentMenu = currentMenu;
     notify();
 }
+
+void Hyperlapser::menuUp() {
+    setCurrentMenu(currentMenu + 1);
+}
+
+void Hyperlapser::menuDown() {
+    setCurrentMenu(currentMenu - 1);
+}
+

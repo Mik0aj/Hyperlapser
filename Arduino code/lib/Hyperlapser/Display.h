@@ -10,15 +10,23 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "Subject.h"
+#include "Hyperlapser.h"
+
 
 class Display : public LiquidCrystal_I2C, public Observer {
     LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 16, 2);
+    Hyperlapser *hyper;
+    int **list;
 public:
-    Display(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows);;
+    Display(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows);
+    Display(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows,Hyperlapser *hyperlapser);
 
-    void onReceivedDataFromSubject(Subject *);
+    void setPointerToHyperlapser(Hyperlapser *hyper);
+
+    void onReceivedDataFromSubject(Subject *subject);
 
     void initClass();
+
 };
 
 
