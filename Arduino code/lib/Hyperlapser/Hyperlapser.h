@@ -26,30 +26,31 @@ namespace ConstantValues {
     const int SET_END_POSITION = 6;
     const int SET_START_POSITION = 5;
     const int SWITCH_START_END = 7;
-    const int REMOVE_NUMBER=10;
-    const int CONFIRM_NUMBER=11;
+    const int REMOVE_NUMBER = 10;
+    const int CONFIRM_NUMBER = 11;
 };
+
 class State;
 
-class Hyperlapser : public Subject{
+class Hyperlapser : public Subject {
 private:
     State *currentState;
-    int currentMenu=1;
-    int currentNumber=0;
-    int pos = 0;
-    int startPos=ConstantValues::START_POSITION;
-    int endPos=ConstantValues::END_POSITION;
-    int time=3;
-    int timeMultiplier =ConstantValues::TIME_MULTIPLIER_MINUTE;
+    int currentMenu = 1;
+    int currentNumber = 0;
+    int pos = ConstantValues::START_POSITION;
+    int startPos = ConstantValues::START_POSITION;
+    int endPos = ConstantValues::END_POSITION;
+    int time = ConstantValues::TIME;
+    int timeMultiplier = ConstantValues::TIME_MULTIPLIER_MINUTE;
     Servo servo;
-    float  interval;
-    int *valuesList[7]={&currentMenu,&currentNumber,&time,&pos,&startPos,&endPos,&timeMultiplier};
+    float interval;
 public:
     Hyperlapser();
 
     void setCurrentMenu(int currentMenu);
 
     void menuUp();
+
     void menuDown();
 
     void notify();
@@ -67,6 +68,48 @@ public:
     void changeStateToMenu();
 
     int getCurrentMenu() const;
+
+    int validatePos(int pos);
+
+    int getPos() const;
+
+    int getTime() const;
+
+    void setTime(int time);
+
+    void calculateAndSetInterval();
+
+    State *getCurrentState() const;
+
+    int getCurrentNumber() const;
+
+    void setCurrentNumber(int currentNumber);
+
+    void setPos(int pos);
+
+    int getStartPos() const;
+
+    void setStartPos(int startPos);
+
+    int getEndPos() const;
+
+    void setEndPos(int endPos);
+
+    int getTimeMultiplier() const;
+
+    void setTimeMultiplier(int timeMultiplier);
+
+    void setServo(const Servo &servo);
+
+    float getInterval() const;
+
+    void setInterval(float interval);
+
+    void numberUp();
+
+    void numberDown();
+
+    void moveServo();
 };
 
 

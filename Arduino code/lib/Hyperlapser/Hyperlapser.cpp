@@ -7,137 +7,26 @@
 #include "TurnServo.h"
 #include "ChooseNumber.h"
 
-
-//Hyperlapser::Hyperlapser() {
-//    Menu menu(this);
-//    ChooseNumber chooseNumber(this);
-//    TurnServo turnServo;
-//    State hyperlapserState = menu;
-//}
-//
-//void Hyperlapser::upButton() {
-//    hyperlapserState.upButton();
-//}
-//
-//
-//void Hyperlapser::downButton() {
-//    hyperlapserState.downButton();
-//}
-//
-//void Hyperlapser::confirmButton() {
-//    hyperlapserState.confirmButton();
-//}
-//
-//State Hyperlapser::getMenuState() {
-//    return menu;
-//}
-//
-//State Hyperlapser::getChooseNumberState() {
-//    return chooseNumber;
-//}
-//
-//State Hyperlapser::getTurnServoState() {
-//    return turnServo;
-//}
-//
 int Hyperlapser::getCurrentMenu() const {
     return currentMenu;
 }
-//
-//void Hyperlapser::setCurrentMenu(int currentMenu) {
-//    if (Hyperlapser::currentMenu == 0) {
-//        Hyperlapser::currentMenu = 1;
-//    } else if (Hyperlapser::currentMenu == MAX_MENU_VALUE) {
-//        Hyperlapser::currentMenu = 7;
-//    } else {
-//        Hyperlapser::currentMenu = currentMenu;
-//    }
-//}
-//
-//int Hyperlapser::getCurrentNumber() const {
-//    return currentNumber;
-//}
-//
-//void Hyperlapser::setCurrentNumber(int currentNumber) {
-//    if (Hyperlapser::currentNumber == 0) {
-//        Hyperlapser::currentNumber = 1;
-//    } else if (Hyperlapser::currentNumber == MAX_NUMBER_MENU_VALUE) {
-//        Hyperlapser::currentNumber = 7;
-//    } else {
-//        Hyperlapser::currentNumber = currentNumber;
-//    }
-//}
-//
-//int Hyperlapser::getPos() const {
-//    return pos;
-//}
-//
-//void Hyperlapser::setPos(int pos) {
-//    if (Hyperlapser::pos == startPos) {
-//        Hyperlapser::pos = startPos;
-//    } else if (Hyperlapser::pos == endPos) {
-//        Hyperlapser::pos = endPos;
-//    } else {
-//        Hyperlapser::pos = pos;
-//    }
-//    servo.write(pos)
-//}
-//
-//int Hyperlapser::getStartPos() const {
-//    return startPos;
-//}
-//
-//void Hyperlapser::setStartPos(int startPos) {
-//    Hyperlapser::startPos = startPos;
-//}
-//
-//int Hyperlapser::getEndPos() const {
-//    return endPos;
-//}
-//
-//void Hyperlapser::setEndPos(int endPos) {
-//    Hyperlapser::endPos = endPos;
-//}
-//
-//const State &Hyperlapser::getHyperlapserState() const {
-//    return hyperlapserState;
-//}
-//
-//int Hyperlapser::getTime() const {
-//    return time;
-//}
-//
-//void Hyperlapser::setTime(int time) {
-//    Hyperlapser::time = time;
-//}
-//
-//int Hyperlapser::getTimeMultiplier() const {
-//    return timeMultiplier;
-//}
-//
-//void Hyperlapser::setTimeMultiplier(int timeMultiplier) {
-//    Hyperlapser::timeMultiplier = timeMultiplier;
-//}
-//
-//void Hyperlapser::calculateInterval() {
-//    Hyperlapser::interval = time * timeMultiplier / abs(endPos - startPos);
-//}
-//
-//void Hyperlapser::setHyperlapserState(State newHyperlapserState) {
-//    hyperlapserState=newHyperlapserState;
-//}
-//
-//
-//void Hyperlapser::setHyperlapserState(const State &hyperlapserState) {
-//    Hyperlapser::hyperlapserState = hyperlapserState;
-//}
-//
-//
-//
-//void Hyperlapser::attachServo(Servo servo) {
-//    Hyperlapser::servo=servo;
-//}
-//
+
+int Hyperlapser::getPos() const {
+    return pos;
+}
+
+int Hyperlapser::getTime() const {
+    return time;
+}
+
+void Hyperlapser::setTime(int time) {
+    Hyperlapser::time = time;
+}
+
+void Hyperlapser::calculateAndSetInterval() {
+    Hyperlapser::setInterval(time * timeMultiplier / abs(endPos - startPos));
+}
+
 void Hyperlapser::upButton() {
     currentState->upButton();
 
@@ -180,7 +69,6 @@ void Hyperlapser::notify() {
 }
 
 
-
 void Hyperlapser::setCurrentMenu(int currentMenu) {
     if (currentMenu == 0)currentMenu = 7;
     if (currentMenu == ConstantValues::MAX_MENU_VALUE)currentMenu = 1;
@@ -194,5 +82,82 @@ void Hyperlapser::menuUp() {
 
 void Hyperlapser::menuDown() {
     setCurrentMenu(currentMenu - 1);
+}
+
+void Hyperlapser::numberUp() {
+    setCurrentNumber(currentNumber + 1);
+}
+
+void Hyperlapser::numberDown() {
+    setCurrentNumber(currentNumber - 1);
+}
+
+State *Hyperlapser::getCurrentState() const {
+    return currentState;
+}
+
+int Hyperlapser::getCurrentNumber() const {
+    return currentNumber;
+}
+
+void Hyperlapser::setCurrentNumber(int currentNumber) {
+    if (currentMenu == 0)currentMenu = 11;
+    if (currentMenu == ConstantValues::MAX_NUMBER_MENU_VALUE)currentMenu = 0;
+    Hyperlapser::currentNumber = currentNumber;
+    notify();
+}
+
+void Hyperlapser::setPos(int pos) {
+    Hyperlapser::pos = validatePos(pos);
+}
+
+int Hyperlapser::getStartPos() const {
+    return startPos;
+}
+
+void Hyperlapser::setStartPos(int startPos) {
+    Hyperlapser::startPos = validatePos(startPos);
+}
+
+int Hyperlapser::getEndPos() const {
+    return endPos;
+}
+
+void Hyperlapser::setEndPos(int endPos) {
+    Hyperlapser::endPos = validatePos(endPos);
+}
+
+int Hyperlapser::getTimeMultiplier() const {
+    return timeMultiplier;
+}
+
+void Hyperlapser::setTimeMultiplier(int timeMultiplier) {
+    Hyperlapser::timeMultiplier = timeMultiplier;
+}
+
+void Hyperlapser::moveServo() {
+    if (Hyperlapser::startPos > Hyperlapser::endPos) {
+        setPos(Hyperlapser::pos - 1);
+    } else if (Hyperlapser::startPos < Hyperlapser::endPos) {
+        setPos(Hyperlapser::pos + 1);
+    }
+}
+
+void Hyperlapser::setServo(const Servo &servo) {
+    Hyperlapser::servo = servo;
+}
+
+float Hyperlapser::getInterval() const {
+    return interval;
+}
+
+void Hyperlapser::setInterval(float interval) {
+    Hyperlapser::interval = interval;
+}
+
+int Hyperlapser::validatePos(int pos) {
+    if (pos > 180)pos = 180;
+    if (pos < 0)pos = 0;
+    return pos;
 }
 
