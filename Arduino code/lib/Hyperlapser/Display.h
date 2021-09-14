@@ -32,6 +32,8 @@ public:
     int WhatState();
 
     void DisplayChooseMenuState();
+
+    void DisplayTurnServo();
 };
 
 

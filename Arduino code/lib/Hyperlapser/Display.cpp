@@ -18,6 +18,7 @@ void Display::onReceivedDataFromSubject(Subject *subject) {
             DisplayChooseMenuState();
             break;
         case ConstantValues::TURN_SERVO_STATE:
+            DisplayTurnServo();
             break;
 
     }
@@ -77,6 +78,13 @@ void Display::DisplayChooseMenuState() {
     }
 }
 
+void Display::DisplayTurnServo() {
+    print("Running");
+    setCursor(0, 1);
+    print("Pos: ");
+    print(hyper->getPos());
+}
+
 void Display::DisplayMenuState() {
     switch (hyper->getCurrentMenu()) {
         case ConstantValues::CHANGE_TIME:
@@ -134,6 +142,7 @@ Display::Display(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, Hyperlaps
 Display::Display(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows) : LiquidCrystal_I2C(lcd_Addr, lcd_cols,
                                                                                            lcd_rows) {
 }
+
 
 
 
