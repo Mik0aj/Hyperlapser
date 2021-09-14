@@ -49,16 +49,22 @@ Hyperlapser::Hyperlapser()
 void Hyperlapser::changeStateToTurnServo() {
     delete currentState;
     currentState = new TurnServo(this);
+    resetPosition();
+    calculateAndSetInterval();
+    setRunning(true);
+    notify();
 }
 
 void Hyperlapser::changeStateToMenu() {
     delete currentState;
     currentState = new Menu(this);
+    notify();
 }
 
 void Hyperlapser::changeStateToChooseNumber() {
     delete currentState;
     currentState = new ChooseNumber(this);
+    notify();
 }
 
 
@@ -101,8 +107,8 @@ int Hyperlapser::getCurrentNumber() const {
 }
 
 void Hyperlapser::setCurrentNumber(int currentNumber) {
-    if (currentMenu == 0)currentMenu = 11;
-    if (currentMenu == ConstantValues::MAX_NUMBER_MENU_VALUE)currentMenu = 0;
+    if (currentNumber < 0)currentNumber = 11;
+    if (currentNumber > ConstantValues::MAX_NUMBER_MENU_VALUE)currentNumber = 0;
     Hyperlapser::currentNumber = currentNumber;
     notify();
 }
@@ -117,6 +123,7 @@ int Hyperlapser::getStartPos() const {
 
 void Hyperlapser::setStartPos(int startPos) {
     Hyperlapser::startPos = validatePos(startPos);
+    notify();
 }
 
 int Hyperlapser::getEndPos() const {
@@ -125,6 +132,7 @@ int Hyperlapser::getEndPos() const {
 
 void Hyperlapser::setEndPos(int endPos) {
     Hyperlapser::endPos = validatePos(endPos);
+    notify();
 }
 
 int Hyperlapser::getTimeMultiplier() const {
@@ -133,6 +141,7 @@ int Hyperlapser::getTimeMultiplier() const {
 
 void Hyperlapser::setTimeMultiplier(int timeMultiplier) {
     Hyperlapser::timeMultiplier = timeMultiplier;
+    notify();
 }
 
 void Hyperlapser::moveServo() {
@@ -141,17 +150,17 @@ void Hyperlapser::moveServo() {
     } else if (Hyperlapser::startPos < Hyperlapser::endPos) {
         setPos(Hyperlapser::pos + 1);
     }
+    servo->write(pos);
+    notify();
 }
 
-void Hyperlapser::setServo(const Servo &servo) {
-    Hyperlapser::servo = servo;
-}
+
 
 float Hyperlapser::getInterval() const {
     return interval;
 }
 
-void Hyperlapser::setInterval(float interval) {
+void Hyperlapser::setInterval(long interval) {
     Hyperlapser::interval = interval;
 }
 
@@ -159,5 +168,55 @@ int Hyperlapser::validatePos(int pos) {
     if (pos > 180)pos = 180;
     if (pos < 0)pos = 0;
     return pos;
+}
+
+void Hyperlapser::resetPosition() {
+    setPos(getStartPos());
+    servo->write(pos);
+}
+
+void Hyperlapser::switchStartEndValues() {
+    int temp = getStartPos();
+    setStartPos(getEndPos());
+    setEndPos(temp);
+    resetPosition();
+}
+
+void Hyperlapser::changeTimeMultiplier() {
+    switch (Hyperlapser::timeMultiplier) {
+        case ConstantValues::TIME_MULTIPLIER_SECOND:
+            setTimeMultiplier(ConstantValues::TIME_MULTIPLIER_MINUTE);
+            break;
+        case ConstantValues::TIME_MULTIPLIER_MINUTE:
+            setTimeMultiplier(ConstantValues::TIME_MULTIPLIER_HOUR);
+            break;
+        case ConstantValues::TIME_MULTIPLIER_HOUR:
+            setTimeMultiplier(ConstantValues::TIME_MULTIPLIER_SECOND);
+            break;
+        default:
+            setTimeMultiplier(ConstantValues::TIME_MULTIPLIER_MINUTE);
+            break;
+    }
+}
+
+int Hyperlapser::getNumber() const {
+    return number;
+}
+
+void Hyperlapser::setNumber(int number) {
+    Hyperlapser::number = number;
+    notify();
+}
+
+bool Hyperlapser::isRunning() const {
+    return running;
+}
+
+void Hyperlapser::setRunning(bool running) {
+    Hyperlapser::running = running;
+}
+
+void Hyperlapser::setServo(Servo *servo) {
+    Hyperlapser::servo = servo;
 }
 

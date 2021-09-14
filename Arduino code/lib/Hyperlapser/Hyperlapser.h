@@ -19,6 +19,7 @@ namespace ConstantValues {
     const int TIME_MULTIPLIER_SECOND = 1;
     const int TIME_MULTIPLIER_MINUTE = 60;
     const int TIME_MULTIPLIER_HOUR = 3600;
+    // Menu state
     const int CHANGE_TIME = 1;
     const int CHANGE_TIME_MULTIPLIER = 2;
     const int START_PROGRAM = 3;
@@ -26,9 +27,15 @@ namespace ConstantValues {
     const int SET_END_POSITION = 6;
     const int SET_START_POSITION = 5;
     const int SWITCH_START_END = 7;
+    // Choose number state
     const int REMOVE_NUMBER = 10;
     const int CONFIRM_NUMBER = 11;
+    // State IDs
+    const int MENU_STATE = 1;
+    const int CHOOSE_NUMBER_STATE = 2;
+    const int TURN_SERVO_STATE = 3;
 };
+
 
 class State;
 
@@ -42,10 +49,24 @@ private:
     int endPos = ConstantValues::END_POSITION;
     int time = ConstantValues::TIME;
     int timeMultiplier = ConstantValues::TIME_MULTIPLIER_MINUTE;
-    Servo servo;
-    float interval;
+    bool running = false;
+    unsigned int number = 0;
+    Servo *servo;
+public:
+    void setServo(Servo *servo);
+
+private:
+    long interval;
 public:
     Hyperlapser();
+
+    int getNumber() const;
+
+    void setNumber(int number);
+
+    bool isRunning() const;
+
+    void setRunning(bool running);
 
     void setCurrentMenu(int currentMenu);
 
@@ -99,17 +120,22 @@ public:
 
     void setTimeMultiplier(int timeMultiplier);
 
-    void setServo(const Servo &servo);
 
     float getInterval() const;
 
-    void setInterval(float interval);
+    void setInterval(long interval);
 
     void numberUp();
 
     void numberDown();
 
     void moveServo();
+
+    void resetPosition();
+
+    void switchStartEndValues();
+
+    void changeTimeMultiplier();
 };
 
 
