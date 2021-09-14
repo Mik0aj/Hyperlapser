@@ -14,8 +14,7 @@ void Menu::downButton() {
 }
 
 void Menu::confirmButton() {
-    int currentMenu=owner->getCurrentMenu();
-    switch (currentMenu) {
+    switch (owner->getCurrentMenu()) {
         case ConstantValues::CHANGE_TIME:
             owner->changeStateToChooseNumber();
             break;
@@ -24,17 +23,25 @@ void Menu::confirmButton() {
             break;
         case ConstantValues::START_PROGRAM:
             owner->changeStateToTurnServo();
+            break;
         case ConstantValues::RESET_POSITION:
             owner->resetPosition();
-        case ConstantValues::START_POSITION:
+            break;
+        case ConstantValues::SET_START_POSITION:
             owner->changeStateToChooseNumber();
-        case ConstantValues::END_POSITION:
+            break;
+        case ConstantValues::SET_END_POSITION:
             owner->changeStateToChooseNumber();
+            break;
         case ConstantValues::SWITCH_START_END:
             owner->switchStartEndValues();
+            break;
     }
 }
 
 void Menu::upButton() {
 owner->menuDown();
+}
+int Menu::returnStateId(){
+    return ConstantValues::MENU_STATE;
 }

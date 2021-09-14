@@ -27,6 +27,11 @@ public:
 
     void initClass();
 
+    void DisplayMenuState();
+
+    int WhatState();
+
+    void DisplayChooseMenuState();
 };
 
 

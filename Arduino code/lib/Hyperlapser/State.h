@@ -14,7 +14,7 @@ public:
     virtual void upButton() = 0;
     virtual void downButton() =0;
     virtual void confirmButton() = 0;
-
+    virtual int returnStateId()=0;
 protected:
     Hyperlapser* owner;
 };
