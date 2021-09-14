@@ -19,6 +19,7 @@ public:
 
     void confirmButton() override;
 
+    int returnStateId();
 };
 
 
