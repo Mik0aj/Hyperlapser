@@ -9,17 +9,15 @@ TurnServo::TurnServo(Hyperlapser *newOwner) : State(owner) {
 }
 
 void TurnServo::downButton() {
-    Serial.print("downButton TurnServo ");
+    //nothing
 }
 
 void TurnServo::confirmButton() {
-    owner->changeStateToChooseNumber();
-
+    owner->changeStateToMenu();
 }
 
 void TurnServo::upButton() {
-    Serial.print("upbutton TurnServo ");
-
+    //nothing
 }
 
 int TurnServo::returnStateId() {
