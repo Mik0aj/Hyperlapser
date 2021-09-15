@@ -10,9 +10,12 @@ const int DOWN_BUTTON = 5;
 const int CONFIRM_BUTTON = 6;
 const int BUTTON_ARRAY[] = {UP_BUTTON, DOWN_BUTTON, CONFIRM_BUTTON};
 Servo servo;
+
 void (Hyperlapser::*functions[])() ={&Hyperlapser::upButton, &Hyperlapser::downButton, &Hyperlapser::confirmButton};
+
 unsigned long lastButtonClick = 0;
 unsigned long lastServoMove = 0;
+unsigned long backlightTimeout = 0;
 Hyperlapser hyperlapser;
 Display display(0x27, 16, 2, &hyperlapser);
 
@@ -33,11 +36,15 @@ void loop() {
         for (int i = 0; i < 3; i++) {
             if (!digitalRead(BUTTON_ARRAY[i])) {
                 (hyperlapser.*functions[i])();
+                backlightTimeout = millis();
             }
         }
         lastButtonClick = millis();
     } else if (millis() - lastServoMove >= hyperlapser.getInterval() * 1000 && hyperlapser.isRunning()) {
         lastServoMove = millis();
         hyperlapser.moveServo();
+    } else if (millis() - backlightTimeout > 15000) {
+        display.noBacklight();
+        backlightTimeout = millis();
     }
 }
