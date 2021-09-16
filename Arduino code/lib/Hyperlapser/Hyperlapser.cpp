@@ -58,12 +58,14 @@ void Hyperlapser::changeStateToTurnServo() {
 void Hyperlapser::changeStateToMenu() {
     delete currentState;
     currentState = new Menu(this);
+    setRunning(false);
     notify();
 }
 
 void Hyperlapser::changeStateToChooseNumber() {
     delete currentState;
     currentState = new ChooseNumber(this);
+    setRunning(false);
     notify();
 }
 
@@ -154,7 +156,10 @@ void Hyperlapser::moveServo() {
     notify();
 }
 
-
+void Hyperlapser::resetPosition() {
+    setPos(getStartPos());
+    servo->write(pos);
+}
 
 float Hyperlapser::getInterval() const {
     return interval;
@@ -170,10 +175,7 @@ int Hyperlapser::validatePos(int pos) {
     return pos;
 }
 
-void Hyperlapser::resetPosition() {
-    setPos(getStartPos());
-    servo->write(pos);
-}
+
 
 void Hyperlapser::switchStartEndValues() {
     int temp = getStartPos();
